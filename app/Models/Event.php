@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Spatie\Translatable\HasTranslations;
@@ -10,7 +11,7 @@ use Spatie\MediaLibrary\InteractsWithMedia;
 
 class Event extends Model implements HasMedia
 {
-    use SoftDeletes, HasTranslations, InteractsWithMedia;
+    use SoftDeletes, HasTranslations, InteractsWithMedia, HasFactory;
 
     protected $fillable = [
         'user_id',

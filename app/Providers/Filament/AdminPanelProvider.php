@@ -3,7 +3,6 @@
 namespace App\Providers\Filament;
 
 use Filament\Http\Middleware\Authenticate;
-use Filament\Http\Middleware\AuthenticateSession;
 use Filament\Http\Middleware\DisableBladeIconComponents;
 use Filament\Http\Middleware\DispatchServingFilamentEvent;
 use Filament\Pages;
@@ -15,8 +14,11 @@ use Illuminate\Cookie\Middleware\AddQueuedCookiesToResponse;
 use Illuminate\Cookie\Middleware\EncryptCookies;
 use Illuminate\Foundation\Http\Middleware\VerifyCsrfToken;
 use Illuminate\Routing\Middleware\SubstituteBindings;
+use Illuminate\Session\Middleware\AuthenticateSession;
 use Illuminate\Session\Middleware\StartSession;
 use Illuminate\View\Middleware\ShareErrorsFromSession;
+use Filament\SpatieLaravelTranslatablePlugin;
+// J'ai supprimé l'import inutile de MediaLibraryPlugin ici
 
 class AdminPanelProvider extends PanelProvider
 {
@@ -27,6 +29,14 @@ class AdminPanelProvider extends PanelProvider
             ->id('admin')
             ->path('admin')
             ->login()
+            ->profile() // <--- AJOUTE ÇA ICI (Active la page "Mon Profil")
+
+             // --- PERSONNALISATION CK AGENCY ---
+             ->brandName('CK Event Agency') // Le texte du logo
+             ->favicon(asset('images/favicon.jpg')) // L'icône dans l'onglet du navigateur
+             ->sidebarCollapsibleOnDesktop() // Menu rétractable (plus pro)
+             ->maxContentWidth('full') // Utiliser toute la largeur
+
             ->colors([
                 'primary' => Color::Amber,
             ])
@@ -36,10 +46,7 @@ class AdminPanelProvider extends PanelProvider
                 Pages\Dashboard::class,
             ])
             ->discoverWidgets(in: app_path('Filament/Widgets'), for: 'App\\Filament\\Widgets')
-            ->widgets([
-                Widgets\AccountWidget::class,
-                Widgets\FilamentInfoWidget::class,
-            ])
+           
             ->middleware([
                 EncryptCookies::class,
                 AddQueuedCookiesToResponse::class,
@@ -53,6 +60,8 @@ class AdminPanelProvider extends PanelProvider
             ])
             ->authMiddleware([
                 Authenticate::class,
-            ]);
+            ])
+            ->plugin(SpatieLaravelTranslatablePlugin::make()->defaultLocales(['fr', 'en']));
+            // J'ai retiré l'appel au plugin MediaLibrary qui causait l'erreur
     }
 }
