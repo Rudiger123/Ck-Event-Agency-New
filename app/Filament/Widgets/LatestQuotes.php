@@ -50,7 +50,7 @@ class LatestQuotes extends BaseWidget
             ->actions([
                 // Petit bouton pour voir le devis directement
                 Tables\Actions\Action::make('open')
-                    ->url(fn (QuoteRequest $record): string => route('filament.admin.resources.quote-requests.index', $record))
+                    ->url(fn (QuoteRequest $record): string => route('filament.admin.resources.quote-requests.edit', $record))
                     ->icon('heroicon-m-eye')
                     ->label('Voir'),
             ]);

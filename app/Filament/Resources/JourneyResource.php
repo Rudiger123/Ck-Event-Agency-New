@@ -12,9 +12,13 @@ use Filament\Tables;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
+use Filament\Resources\Concerns\Translatable;
 
 class JourneyResource extends Resource
 {
+
+    use Translatable;
+    
     protected static ?string $model = Journey::class;
 
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';

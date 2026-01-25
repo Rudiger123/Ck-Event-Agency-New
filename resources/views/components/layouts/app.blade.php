@@ -87,6 +87,7 @@
                 <div class="h-4 w-px bg-gray-300 mx-2"></div>
 
                 <!-- SWITCH LANGUE -->
+               <!--
                 <div class="flex items-center space-x-2 text-xs font-bold mr-2">
                     <a href="{{ route('switch-language', 'fr') }}"
                         class="{{ app()->getLocale() == 'fr' ? 'text-brand-gold' : 'text-gray-400 hover:text-brand-black' }}">FR</a>
@@ -94,7 +95,7 @@
                     <a href="{{ route('switch-language', 'en') }}"
                         class="{{ app()->getLocale() == 'en' ? 'text-brand-gold' : 'text-gray-400 hover:text-brand-black' }}">EN</a>
                 </div>
-
+               -->
                 <!-- BOUTON DEVIS -->
                 <a href="{{ route('quote') }}"
                     class="px-5 py-2 bg-brand-gold text-white text-xs font-bold uppercase tracking-widest hover:bg-brand-black transition duration-300 shadow-md transform hover:-translate-y-0.5">

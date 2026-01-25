@@ -2,7 +2,7 @@
     <!-- 1. HERO SECTION (Déjà existant) -->
     <div class="relative w-full h-[85vh] flex items-center justify-center bg-brand-black overflow-hidden">
         <div class="absolute inset-0 bg-black/50 z-10"></div>
-        <img src="https://images.unsplash.com/photo-1511795409834-ef04bbd61622?q=80&w=2069&auto=format&fit=crop" 
+        <img src="{{ asset('images/hero-1.png') }}" 
              class="absolute inset-0 w-full h-full object-cover opacity-60" alt="Background">
 
         <div class="relative z-20 text-center px-4 max-w-5xl mx-auto" x-data="{ show: false }" x-init="setTimeout(() => show = true, 500)">
@@ -51,7 +51,7 @@
                 <!-- Image Déco -->
                 <div class="w-full md:w-1/2 relative">
                     <div class="absolute inset-0 border-2 border-brand-gold translate-x-6 translate-y-6 hidden md:block"></div>
-                    <img src="https://images.unsplash.com/photo-1557804506-669a67965ba0?q=80&w=1000&auto=format&fit=crop" 
+                    <img src="{{ asset('images/homeck.png') }}" 
                          alt="Vision Agence" 
                          class="relative z-10 w-full h-[500px] object-cover shadow-2xl grayscale hover:grayscale-0 transition duration-1000">
                 </div>

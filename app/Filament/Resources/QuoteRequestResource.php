@@ -135,7 +135,7 @@ class QuoteRequestResource extends Resource
     {
         return [
             'index' => Pages\ListQuoteRequests::route('/'),
-            // Pas de création manuelle
+            'edit' => Pages\EditQuoteRequest::route('/{record}/edit'),
         ];
     }
 }

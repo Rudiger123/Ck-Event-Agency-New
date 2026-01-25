@@ -62,6 +62,5 @@ class AdminPanelProvider extends PanelProvider
                 Authenticate::class,
             ])
             ->plugin(SpatieLaravelTranslatablePlugin::make()->defaultLocales(['fr', 'en']));
-            // J'ai retiré l'appel au plugin MediaLibrary qui causait l'erreur
     }
 }

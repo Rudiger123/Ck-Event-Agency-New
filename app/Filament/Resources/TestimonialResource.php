@@ -10,9 +10,11 @@ use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
 use Filament\Forms\Components\SpatieMediaLibraryFileUpload;
+use Filament\Resources\Concerns\Translatable;
 
 class TestimonialResource extends Resource
 {
+    use Translatable;
     protected static ?string $model = Testimonial::class;
     protected static ?string $navigationIcon = 'heroicon-o-chat-bubble-left-right';
     protected static ?string $navigationGroup = 'Site Web';
