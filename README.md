@@ -1,59 +1,79 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# 🌟 CK Event Agency - Premium Communication Platform
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+[![Laravel 11](https://img.shields.io/badge/Laravel-11.x-FF2D20?style=for-the-badge&logo=laravel)](https://laravel.com)
+[![Livewire 3](https://img.shields.io/badge/Livewire-3.x-FB70A9?style=for-the-badge&logo=livewire)](https://livewire.laravel.com)
+[![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-4.0-38B2AC?style=for-the-badge&logo=tailwind-css)](https://tailwindcss.com)
+[![Filament PHP](https://img.shields.io/badge/Filament_PHP-3.x-EAB308?style=for-the-badge&logo=filament)](https://filamentphp.com)
 
-## About Laravel
+**CK Event Agency** est une plateforme web de prestige développée pour l'agence de communication et de presse incarnée par **Cynthia Kenne**. Ce projet allie une architecture technique moderne (TALL Stack) à un design épuré "Noir & Or", reflétant l'excellence et l'élégance de l'événementiel de luxe.
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+---
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+## 🚀 Fonctionnalités Clés
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+### 🌐 Interface Utilisateur (Frontend)
+- **Landing Page Narrative :** Présentation immersive de la vision de l'agence, des expertises et des dernières actualités.
+- **Média Blog Intelligent :** Système de gestion d'articles avec affichage conditionnel hiérarchisé (Vidéo > Audio > Image).
+- **Portfolio Immersif :** Galeries photos haute résolution avec système de Lightbox interactif (Alpine.js).
+- **Parcours Gamifié :** Timeline interactive retraçant le parcours professionnel de la fondatrice.
+- **Système de Témoignages :** Slider dynamique fluide pour la preuve sociale.
+- **Multilingue (V1) :** Architecture prête pour le bilinguisme (Français/Anglais).
 
-## Learning Laravel
+### 🛠️ Espace Administration (Back-Office)
+- **Dashboard Customisé :** Widgets de statistiques en temps réel, graphiques d'activité et gestion des priorités.
+- **Gestionnaire de Devis (CRM) :** Réception des demandes complexes et envoi de propositions commerciales (PDF) directement depuis l'admin.
+- **Modération de Contenu :** Gestion complète des commentaires, articles, événements et abonnés newsletter.
+- **Réglages Dynamiques :** Contrôle total sur les coordonnées, liens sociaux et SEO sans toucher au code.
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework. You can also check out [Laravel Learn](https://laravel.com/learn), where you will be guided through building a modern Laravel application.
+---
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+## 🛠️ Stack Technique
 
-## Laravel Sponsors
+- **Framework :** [Laravel 11](https://laravel.com)
+- **Frontend :** [Livewire 3](https://livewire.laravel.com) & [Alpine.js](https://alpinejs.dev)
+- **Design :** [Tailwind CSS 4.0](https://tailwindcss.com) (Architecture luxe Noir & Or)
+- **Panneau Admin :** [FilamentPHP v3](https://filamentphp.com)
+- **Base de données :** MySQL (Production) / SQLite (Local)
+- **Gestion Médias :** Spatie MediaLibrary
+- **Internationalisation :** Spatie Laravel Translatable
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+---
 
-### Premium Partners
+## 📦 Installation Locale
 
-- **[Vehikl](https://vehikl.com)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Redberry](https://redberry.international/laravel-development)**
-- **[Active Logic](https://activelogic.com)**
+1. **Cloner le projet**
+   ```bash
+   git clone https://github.com/Rudiger123/ck-event-agency.git
+   cd ck-event-agency
+   Installer les dépendances PHP & JS
+```Bash
+    composer install
+        npm install
+    Configuration de l'environnement
+```
 
-## Contributing
+```Bash
+cp .env.example .env
+php artisan key:generate
+```
+Migration et Seed (Données de test)
+```Bash
+php artisan migrate --seed
+```
+Lancer les serveurs
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
-
-## Code of Conduct
-
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
-
-## Security Vulnerabilities
-
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
-
-## License
-
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+```Bash
+php artisan serve
+npm run dev
+```
+## 📐 Architecture du Projet
+Le projet suit les principes du Clean Code et du Service Pattern :
+Models : Utilisation intensive de Traits pour le multilingue et les médias.
+Livewire Components : Logique métier isolée pour une réactivité optimale sans rechargement de page.
+Filament Resources : Interfaces d'administration hautement personnalisées pour un workflow client simplifié.
+## 👤 Crédits & Vision
+Inspiration & Fondatrice : Cynthia Kenne
+Développement : [Ton Nom ou Pseudo GitHub]
+Mission de l'Agence : Valoriser l'information et l'événementiel à travers une communication humaine et prestigieuse.
+## ⚖️ Licence
+Ce projet est la propriété exclusive de CK Event Agency. Toute reproduction ou utilisation commerciale sans autorisation est interdite.
