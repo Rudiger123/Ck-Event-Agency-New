@@ -123,4 +123,43 @@ return [
         'store' => env('APP_MAINTENANCE_STORE', 'database'),
     ],
 
+    /*
+    |--------------------------------------------------------------------------
+    | Admin Email
+    |--------------------------------------------------------------------------
+    |
+    | Email address where admin notifications (new messages, quote requests)
+    | will be sent.
+    |
+    */
+
+    'admin_email' => env('ADMIN_EMAIL', 'cynthiankwete@gmail.com'),
+
+    /*
+    |--------------------------------------------------------------------------
+    | SEO Configuration
+    |--------------------------------------------------------------------------
+    |
+    | Configuration centralisée pour le SEO et les schemas structurés
+    |
+    */
+
+    'phone' => env('APP_PHONE', ''),
+    'email' => env('APP_EMAIL', ''),
+    'founding_date' => env('APP_FOUNDING_DATE', '2020'),
+
+    'address' => [
+        'street' => env('APP_ADDRESS_STREET', ''),
+        'city' => env('APP_ADDRESS_CITY', ''),
+        'postal_code' => env('APP_ADDRESS_POSTAL_CODE', ''),
+        'country' => env('APP_ADDRESS_COUNTRY', 'FR'),
+    ],
+
+    'social' => [
+        'facebook' => env('APP_SOCIAL_FACEBOOK', ''),
+        'instagram' => env('APP_SOCIAL_INSTAGRAM', ''),
+        'linkedin' => env('APP_SOCIAL_LINKEDIN', ''),
+        'twitter' => env('APP_SOCIAL_TWITTER', ''),
+    ],
+
 ];

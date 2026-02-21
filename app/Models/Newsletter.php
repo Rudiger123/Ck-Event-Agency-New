@@ -2,17 +2,55 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Spatie\Translatable\HasTranslations;
 
 class Newsletter extends Model
 {
-    // On autorise l'enregistrement de ces données
+    use HasFactory, HasTranslations;
+
     protected $fillable = [
-        'email',
-        'status', // 'pending' ou 'confirmed'
-        'locale', // 'fr' ou 'en'
-        'first_name',
-        'confirmation_token',
-        'unsubscribe_token'
+        'user_id',
+        'subject',
+        'content',
+        'status',
+        'sent_at',
     ];
+
+    // Les colonnes traduisibles (JSON)
+    public $translatable = [
+        'subject',
+        'content',
+    ];
+
+    protected $casts = [
+        'sent_at' => 'datetime',
+        'created_at' => 'datetime',
+        'updated_at' => 'datetime',
+    ];
+
+    /**
+     * Relation : Utilisateur qui a créé la newsletter
+     */
+    public function author()
+    {
+        return $this->belongsTo(User::class, 'user_id');
+    }
+
+    /**
+     * Scope : Récupérer les newsletters envoyées
+     */
+    public function scopeSent($query)
+    {
+        return $query->where('status', 'sent');
+    }
+
+    /**
+     * Scope : Récupérer les brouillons
+     */
+    public function scopeDraft($query)
+    {
+        return $query->where('status', 'draft');
+    }
 }

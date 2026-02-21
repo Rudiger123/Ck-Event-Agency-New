@@ -21,6 +21,22 @@ Route::get('/lang/{locale}', function ($locale) {
     return redirect()->back(); // Revient à la page précédente
 })->name('switch-language');
 
+// Newsletter
+Route::get('/newsletter/unsubscribe/{token}', function ($token) {
+    $subscriber = \App\Models\NewsletterSubscriber::where('unsubscribe_token', $token)->first();
+
+    if (!$subscriber) {
+        return response()->view('errors.404', [], 404);
+    }
+
+    $subscriber->update([
+        'status' => 'unsubscribed',
+        'unsubscribed_at' => now(),
+    ]);
+
+    return redirect('/')->with('success', 'Vous avez été désabonné de notre newsletter.');
+})->name('newsletter.unsubscribe');
+
 // Page d'Accueil
 Route::get('/', HomePage::class)->name('home');
 

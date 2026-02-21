@@ -43,13 +43,25 @@ class DatabaseSeeder extends Seeder
         }
 
         // 4. GÉNÉRER LA MASSE DE DONNÉES
-        //$this->command->info('Génération de 25 Articles (avec images)...');
-        //Article::factory(25)->create();
+        $this->command->info('Génération de 05 Articles (avec images)...');
+        Article::factory(05)->create();
 
-        //$this->command->info('Génération de 15 Événements (avec galeries)...');
-        //Event::factory(15)->create();
+        $this->command->info('Génération de 05 Événements (avec galeries)...');
+        Event::factory(05)->create();
 
-        $this->command->info('Génération de 10 Témoignages...');
-        Testimonial::factory(10)->create();
+        $this->command->info('Génération de 05 Témoignages...');
+        Testimonial::factory(05)->create();
+
+        // 5. SEEDER LES PARTENAIRES
+        $this->command->info('Création des Partenaires...');
+        $this->call(PartnerSeeder::class);
+        // 6. SEEDER LES JOURNEYS
+        $this->command->info('Création du parcours de Cynthia...');
+        $this->call(JourneySeeder::class);
+        // 7. SEEDER LES PAGES
+        $this->command->info('Création des Pages statiques...');
+        $this->call([
+            PageSeeder::class,
+        ]);
     }
 }

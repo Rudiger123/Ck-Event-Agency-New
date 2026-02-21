@@ -5,27 +5,16 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <!-- SEO STANDARD -->
+    <!-- SEO INJECTION VIA SeoService (Direct Blade, pas Livewire) -->
+    {!! renderSeoHead() !!}
+
+    <!-- FALLBACK SEO STANDARD (si SeoService n'est pas configuré) -->
+    @if(!Route::is('blog.show', 'portfolio.show'))
     <title>{{ $title ?? 'CK Event Agency | Communication & Événementiel' }}</title>
-    <meta name="description"
-        content="{{ $description ?? 'Agence de communication de presse et événementielle incarnée par Cynthia Kenne. Valorisation de votre image et organisation de vos événements.' }}">
-        <link rel="icon" type="image/jpg" href="{{ asset('images/favicon.jpg') }}">
+    <meta name="description" content="{{ $description ?? 'Agence de communication de presse et événementielle incarnée par Cynthia Kenne. Valorisation de votre image et organisation de vos événements.' }}">
+    @endif
 
-    <!-- OPEN GRAPH (Pour Facebook, WhatsApp, LinkedIn) -->
-    <meta property="og:type" content="website">
-    <meta property="og:url" content="{{ url()->current() }}">
-    <meta property="og:title" content="{{ $title ?? 'CK Event Agency' }}">
-    <meta property="og:description"
-        content="{{ $description ?? 'Agence de communication de presse et événementielle.' }}">
-    <meta property="og:image" content="{{ $image ?? asset('images/logo.png') }}">
-    <!-- Image par défaut si aucune fournie -->
-
-    <!-- TWITTER CARD -->
-    <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="{{ $title ?? 'CK Event Agency' }}">
-    <meta name="twitter:description"
-        content="{{ $description ?? 'Agence de communication de presse et événementielle.' }}">
-    <meta name="twitter:image" content="{{ $image ?? asset('images/default-share.jpg') }}">
+    <link rel="icon" type="image/jpg" href="{{ asset('images/favicon.jpg') }}">
 
     <!-- FONTS -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -214,19 +203,19 @@
             &copy; {{ date('Y') }} CK Event Agency. Fait avec passion.
         </div>
     </footer>
-    
+
     <!-- INDICATEUR ADMIN (Visible seulement si connecté) -->
     @auth
-        <div x-data="{ open: false }" 
+        <div x-data="{ open: false }"
              class="fixed bottom-6 left-6 z-[100] font-sans">
-            
+
             <!-- Le Badge Principal -->
             <div class="flex items-center gap-2 bg-brand-black text-white px-4 py-3 rounded shadow-2xl border border-gray-700 hover:border-brand-gold transition duration-300">
                 <span class="relative flex h-3 w-3">
                   <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
                   <span class="relative inline-flex rounded-full h-3 w-3 bg-green-500"></span>
                 </span>
-                
+
                 <div class="flex flex-col">
                     <span class="text-[10px] uppercase tracking-widest text-gray-400 leading-none">Connecté en tant que</span>
                     <span class="text-sm font-bold text-brand-gold leading-none mt-1">{{ Auth::user()->name }}</span>
@@ -240,7 +229,7 @@
                     <a href="/admin" class="text-xs font-bold hover:text-brand-gold transition" title="Aller au Tableau de Bord">
                         Dashboard
                     </a>
-                    
+
                     <!-- Bouton Déconnexion (Formulaire caché) -->
                     <form method="POST" action="{{ route('filament.admin.auth.logout') }}" class="inline">
                         @csrf

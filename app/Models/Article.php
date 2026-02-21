@@ -31,17 +31,22 @@ class Article extends Model implements HasMedia
 
     // Définir quelles colonnes sont traduisibles (JSON)
     public $translatable = [
-        'title', 
-        'excerpt', 
-        'content', 
-        'meta_title', 
-        'meta_description', 
+        'title',
+        'excerpt',
+        'content',
+        'meta_title',
+        'meta_description',
         'meta_keywords'
     ];
 
     protected $casts = [
         'is_featured' => 'boolean',
         'published_at' => 'datetime',
+        'views_count' => 'integer',
+        'likes' => 'integer',
+        'created_at' => 'datetime',
+        'updated_at' => 'datetime',
+        'deleted_at' => 'datetime',
     ];
 
     // Relations

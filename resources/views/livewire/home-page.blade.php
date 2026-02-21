@@ -2,7 +2,7 @@
     <!-- 1. HERO SECTION (Déjà existant) -->
     <div class="relative w-full h-[85vh] flex items-center justify-center bg-brand-black overflow-hidden">
         <div class="absolute inset-0 bg-black/50 z-10"></div>
-        <img src="{{ asset('images/hero-1.png') }}" 
+        <img src="{{ asset('images/hero-1.png') }}"
              class="absolute inset-0 w-full h-full object-cover opacity-60" alt="Background">
 
         <div class="relative z-20 text-center px-4 max-w-5xl mx-auto" x-data="{ show: false }" x-init="setTimeout(() => show = true, 500)">
@@ -15,7 +15,7 @@
             <p x-show="show" x-transition.delay.500ms class="text-gray-200 text-lg md:text-xl font-light mb-12 max-w-2xl mx-auto">
                 Incarnée par Cynthia Kenne, nous transformons vos actualités et événements en moments inoubliables.
             </p>
-            
+
             <div x-show="show" x-transition.delay.800ms class="flex flex-col md:flex-row gap-6 justify-center">
                 <a href="{{ route('portfolio.index') }}" class="px-8 py-4 bg-brand-gold text-brand-black font-bold uppercase tracking-widest hover:bg-white transition duration-300">
                     Nos Réalisations
@@ -38,7 +38,7 @@
                         Plus qu'une agence, <br>une vision humaine.
                     </h2>
                     <p class="text-gray-600 font-light text-lg leading-relaxed mb-6">
-                        CK Event Agency est née d'une volonté : celle de redonner ses lettres de noblesse à la communication de proximité. 
+                        CK Event Agency est née d'une volonté : celle de redonner ses lettres de noblesse à la communication de proximité.
                         Que ce soit par la plume journalistique ou la mise en scène événementielle, nous portons chaque projet avec une exigence d'excellence.
                     </p>
                     <p class="text-gray-600 font-light text-lg leading-relaxed mb-8">
@@ -51,8 +51,8 @@
                 <!-- Image Déco -->
                 <div class="w-full md:w-1/2 relative">
                     <div class="absolute inset-0 border-2 border-brand-gold translate-x-6 translate-y-6 hidden md:block"></div>
-                    <img src="{{ asset('images/homeck.png') }}" 
-                         alt="Vision Agence" 
+                    <img src="{{ asset('images/homeck.png') }}"
+                         alt="Vision Agence"
                          class="relative z-10 w-full h-[500px] object-cover shadow-2xl grayscale hover:grayscale-0 transition duration-1000">
                 </div>
             </div>
@@ -99,7 +99,107 @@
         </div>
     </section>
 
-    <!-- 4. PORTFOLIO SECTION (Déjà existant - Modifié pour le design) -->
+    <!-- 4. [NOUVEAU] PARTENAIRES & CLIENTS (Marquee Élégant) -->
+    @if($partners->count() > 0)
+    <section class="py-20 bg-gradient-to-r from-brand-black via-gray-900 to-brand-black relative overflow-hidden">
+        <!-- Éléments décoratifs -->
+        <div class="absolute top-0 left-0 w-96 h-96 bg-brand-gold/5 rounded-full blur-3xl -translate-x-1/2 -translate-y-1/2 pointer-events-none"></div>
+        <div class="absolute bottom-0 right-0 w-72 h-72 bg-brand-gold/5 rounded-full blur-3xl translate-x-1/2 translate-y-1/2 pointer-events-none"></div>
+
+        <div class="container mx-auto px-6 relative z-10">
+            <!-- Titre -->
+            <div class="text-center mb-16">
+                <span class="text-brand-gold uppercase tracking-[0.2em] text-xs font-bold block mb-4">Confiance & Partenariat</span>
+                <h2 class="text-4xl font-serif font-bold text-white">
+                    Entreprises & Médias qui nous font confiance
+                </h2>
+            </div>
+
+            <!-- Marquee Container -->
+            <div class="relative overflow-hidden">
+                <!-- Gradient masks (début et fin) -->
+                <div class="absolute inset-y-0 left-0 w-20 bg-gradient-to-r from-brand-black via-brand-black/80 to-transparent z-10 pointer-events-none"></div>
+                <div class="absolute inset-y-0 right-0 w-20 bg-gradient-to-l from-brand-black via-brand-black/80 to-transparent z-10 pointer-events-none"></div>
+
+                <!-- Marquee animation -->
+                <style>
+                    @keyframes marquee {
+                        0% { transform: translateX(0); }
+                        100% { transform: translateX(-50%); }
+                    }
+                    .marquee {
+                        animation: marquee {{ $partners->count() > 3 ? '30s' : '20s' }} linear infinite;
+                    }
+                    .marquee:hover {
+                        animation-play-state: paused;
+                    }
+                </style>
+
+                <!-- Logos Wrapper -->
+                <div class="marquee flex whitespace-nowrap">
+                    @foreach($partners as $partner)
+                    <div class="flex-shrink-0 w-64 md:w-80 h-24 md:h-28 flex items-center justify-center px-8 group cursor-pointer">
+                        <div class="relative w-full h-full flex items-center justify-center transition-all duration-500 transform hover:scale-110">
+                            @if($partner->getFirstMediaUrl('logo'))
+                                <img src="{{ $partner->getFirstMediaUrl('logo') }}"
+                                     alt="{{ $partner->name }}"
+                                     title="{{ $partner->name }}"
+                                     class="max-w-full max-h-full object-contain grayscale group-hover:grayscale-0 transition duration-500 drop-shadow-lg group-hover:drop-shadow-xl"
+                                     loading="lazy">
+                            @else
+                                <div class="flex items-center justify-center w-full h-full bg-white/10 backdrop-blur rounded text-white/60 text-sm font-semibold text-center px-4 grayscale group-hover:grayscale-0 group-hover:text-brand-gold transition duration-500">
+                                    {{ $partner->name }}
+                                </div>
+                            @endif
+                        </div>
+
+                        <!-- Info au survol (optionnel) -->
+                        @if($partner->getFirstMediaUrl('logo'))
+                        <div class="absolute -bottom-10 left-1/2 -translate-x-1/2 bg-brand-gold text-brand-black text-xs font-bold px-3 py-1 rounded opacity-0 group-hover:opacity-100 transition duration-500 whitespace-nowrap pointer-events-none">
+                            {{ $partner->name }}
+                        </div>
+                        @endif
+                    </div>
+                    @endforeach
+
+                    <!-- Duplication des logos pour effet infini fluide -->
+                    @foreach($partners as $partner)
+                    <div class="flex-shrink-0 w-64 md:w-80 h-24 md:h-28 flex items-center justify-center px-8 group cursor-pointer">
+                        <div class="relative w-full h-full flex items-center justify-center transition-all duration-500 transform hover:scale-110">
+                            @if($partner->getFirstMediaUrl('logo'))
+                                <img src="{{ $partner->getFirstMediaUrl('logo') }}"
+                                     alt="{{ $partner->name }}"
+                                     title="{{ $partner->name }}"
+                                     class="max-w-full max-h-full object-contain grayscale group-hover:grayscale-0 transition duration-500 drop-shadow-lg group-hover:drop-shadow-xl"
+                                     loading="lazy">
+                            @else
+                                <div class="flex items-center justify-center w-full h-full bg-white/10 backdrop-blur rounded text-white/60 text-sm font-semibold text-center px-4 grayscale group-hover:grayscale-0 group-hover:text-brand-gold transition duration-500">
+                                    {{ $partner->name }}
+                                </div>
+                            @endif
+                        </div>
+
+                        @if($partner->getFirstMediaUrl('logo'))
+                        <div class="absolute -bottom-10 left-1/2 -translate-x-1/2 bg-brand-gold text-brand-black text-xs font-bold px-3 py-1 rounded opacity-0 group-hover:opacity-100 transition duration-500 whitespace-nowrap pointer-events-none">
+                            {{ $partner->name }}
+                        </div>
+                        @endif
+                    </div>
+                    @endforeach
+                </div>
+            </div>
+
+            <!-- Indication interactive -->
+            <div class="text-center mt-12">
+                <p class="text-white/50 text-sm italic">
+                    ↻ Survolez pour pause · {{ $partners->count() }} partenaires
+                </p>
+            </div>
+        </div>
+    </section>
+    @endif
+
+    <!-- 5. PORTFOLIO SECTION (Déjà existant - Modifié pour le design) -->
     <section class="py-24 bg-brand-black text-white">
         <div class="container mx-auto px-6">
             <div class="flex flex-col md:flex-row justify-between items-end mb-16">
@@ -116,10 +216,10 @@
                 @foreach($events as $event)
                 <div class="group relative overflow-hidden h-[400px] cursor-pointer block">
                     <!-- Image -->
-                    <img src="{{ $event->getFirstMediaUrl('cover_image') }}" 
-                         alt="{{ $event->title }}" 
+                    <img src="{{ $event->getFirstMediaUrl('cover_image') }}"
+                         alt="{{ $event->title }}"
                          class="w-full h-full object-cover transition duration-700 group-hover:scale-110 opacity-70 group-hover:opacity-100">
-                    
+
                     <!-- Overlay au survol -->
                     <div class="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent opacity-90">
                         <div class="absolute bottom-0 left-0 p-8 w-full translate-y-4 group-hover:translate-y-0 transition duration-500">
@@ -140,7 +240,7 @@
         </div>
     </section>
 
-    <!-- 5. TÉMOIGNAGES (Slider Interactif) -->
+    <!-- 6. TÉMOIGNAGES (Slider Interactif) -->
     <section class="py-24 bg-white relative overflow-hidden">
         <!-- Éléments décoratifs d'arrière-plan -->
         <div class="absolute top-0 left-0 w-64 h-64 bg-brand-gold/5 rounded-full blur-3xl -translate-x-1/2 -translate-y-1/2"></div>
@@ -148,11 +248,11 @@
 
         <div class="container mx-auto px-6 relative z-10">
             <h2 class="text-4xl font-serif font-bold text-brand-black mb-16 text-center">Ils nous font confiance</h2>
-            
+
             @if($testimonials->count() > 0)
                 <!-- COMPOSANT SLIDER ALPINE.JS -->
-                <div x-data="{ 
-                        activeSlide: 0, 
+                <div x-data="{
+                        activeSlide: 0,
                         slides: {{ $testimonials->count() }},
                         autoplay: null,
                         startAutoplay() {
@@ -169,7 +269,7 @@
                         prev() {
                             this.activeSlide = (this.activeSlide - 1 + this.slides) % this.slides;
                         }
-                     }" 
+                     }"
                      x-init="startAutoplay()"
                      @mouseenter="stopAutoplay()"
                      @mouseleave="startAutoplay()"
@@ -186,11 +286,11 @@
                                  x-transition:leave-start="opacity-100 translate-x-0"
                                  x-transition:leave-end="opacity-0 -translate-x-10"
                                  class="bg-gray-50 p-8 md:p-12 border border-gray-100 rounded-sm shadow-sm flex flex-col md:flex-row gap-8 items-center text-center md:text-left">
-                                
+
                                 <!-- Photo Client -->
                                 <div class="flex-shrink-0">
-                                    <img src="{{ $testimonial->getFirstMediaUrl('avatar') ?: 'https://ui-avatars.com/api/?name=' . urlencode($testimonial->name) . '&background=C9A961&color=fff' }}" 
-                                         alt="{{ $testimonial->name }}" 
+                                    <img src="{{ $testimonial->getFirstMediaUrl('avatar') ?: 'https://ui-avatars.com/api/?name=' . urlencode($testimonial->name) . '&background=C9A961&color=fff' }}"
+                                         alt="{{ $testimonial->name }}"
                                          class="w-24 h-24 rounded-full object-cover border-4 border-white shadow-md">
                                 </div>
 
@@ -200,11 +300,11 @@
                                         {{ str_repeat('★', $testimonial->rating) }}
                                     </div>
                                     <div class="text-6xl text-brand-gold opacity-10 font-serif absolute top-4 right-8 font-bold">"</div>
-                                    
+
                                     <p class="text-gray-600 italic font-light text-lg mb-6 relative z-10 leading-relaxed">
                                         {{ $testimonial->content }}
                                     </p>
-                                    
+
                                     <div>
                                         <h4 class="font-bold text-brand-black text-sm uppercase tracking-widest">{{ $testimonial->name }}</h4>
                                         <span class="text-xs text-gray-400">{{ $testimonial->role }}</span>
@@ -225,7 +325,7 @@
                     <!-- DOTS (Indicateurs) -->
                     <div class="flex justify-center gap-3 mt-8">
                         @foreach($testimonials as $index => $testimonial)
-                            <button @click="activeSlide = {{ $index }}" 
+                            <button @click="activeSlide = {{ $index }}"
                                     class="w-3 h-3 rounded-full transition-all duration-300 {{ $index === 0 ? '' : '' }}"
                                     :class="activeSlide === {{ $index }} ? 'bg-brand-gold w-8' : 'bg-gray-300 hover:bg-gray-400'">
                             </button>
@@ -239,7 +339,7 @@
         </div>
     </section>
 
-    <!-- 6. BLOG SECTION (Déjà existant) -->
+    <!-- 7. BLOG SECTION (Déjà existant) -->
     <section class="py-24 bg-gray-50">
         <div class="container mx-auto px-6">
             <div class="flex justify-between items-end mb-16">
@@ -257,10 +357,10 @@
                 <article class="group cursor-pointer">
                     <!-- Image -->
                     <div class="relative overflow-hidden h-64 mb-6">
-                        <img src="{{ $article->getFirstMediaUrl('featured_image') }}" 
-                             alt="{{ $article->title }}" 
+                        <img src="{{ $article->getFirstMediaUrl('featured_image') }}"
+                             alt="{{ $article->title }}"
                              class="w-full h-full object-cover transition duration-700 group-hover:scale-110">
-                        
+
                         @if($article->category)
                         <span class="absolute top-4 left-4 bg-brand-gold text-white text-xs px-3 py-1 uppercase tracking-wider">
                             {{ $article->category->name }}
@@ -288,11 +388,11 @@
         </div>
     </section>
 
-    <!-- 7. [NOUVEAU] CTA FINAL (Action) -->
+    <!-- 8. [NOUVEAU] CTA FINAL (Action) -->
     <section class="py-24 bg-brand-black text-center relative overflow-hidden">
         <!-- Fond déco -->
         <div class="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/stardust.png')] opacity-10"></div>
-        
+
         <div class="container mx-auto px-6 relative z-10">
             <h2 class="text-4xl md:text-5xl font-serif font-bold text-white mb-6">
                 Prêt à sublimer votre événement ?
