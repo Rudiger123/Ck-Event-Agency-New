@@ -51,10 +51,9 @@
                 <!-- Image Déco -->
                 <div class="w-full md:w-1/2 relative">
                     <div class="absolute inset-0 border-2 border-brand-gold translate-x-6 translate-y-6 hidden md:block"></div>
-                    <img src="{{ asset('images/homeck.png') }}"
-                         alt="Vision Agence"
-                         class="relative z-10 w-full h-[500px] object-cover shadow-2xl grayscale hover:grayscale-0 transition duration-1000">
-                </div>
+                   <img src="{{ asset('images/homeck.jpg') }}"
+     alt="Vision Agence"
+     class="relative z-10 w-full h-[1000px] object-cover object-top shadow-2xl grayscale hover:grayscale-0 transition duration-1000"></div>
             </div>
         </div>
     </section>

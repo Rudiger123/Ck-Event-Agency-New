@@ -14,35 +14,40 @@ class DatabaseSeeder extends Seeder
 {
     public function run(): void
     {
-        // 1. Créer l'Admin (si pas déjà fait)
+        // 1. Créer l'Admin (utilisateur principal)
+        $this->command->info('Création de l\'utilisateur administrateur...');
         User::firstOrCreate(
             ['email' => 'admin@ckevent.com'],
             [
                 'name' => 'Cynthia Kenne',
                 'password' => bcrypt('cynthia@123'),
                 'role' => 'super_admin',
+                'is_active' => true,
             ]
         );
 
-        // 2. Créer des Catégories (Articles)
-        $categories = ['Presse & Média', 'Événementiel', 'Lifestyle', 'Culture', 'Actualité Agence'];
-        foreach ($categories as $cat) {
-            Category::firstOrCreate(
-                ['slug' => \Illuminate\Support\Str::slug($cat)],
-                ['name' => ['fr' => $cat], 'is_active' => true]
-            );
-        }
+        // 2. Paramètres Généraux
+        $this->command->info('Configuration des paramètres généraux...');
+        $this->call(SettingsSeeder::class);
 
-        // 3. Créer des Types d'Événements (Portfolio)
-        $types = ['Mariage', 'Anniversaire', 'Corporatif', 'Cérémonie Officielle'];
-        foreach ($types as $type) {
-            EventType::firstOrCreate(
-                ['slug' => \Illuminate\Support\Str::slug($type)],
-                ['name' => ['fr' => $type], 'color' => '#C9A961']
-            );
-        }
+        // 3. Catégories (Articles/Blog)
+        $this->command->info('Création des catégories d\'articles...');
+        $this->call(CategorySeeder::class);
 
-        // 4. GÉNÉRER LA MASSE DE DONNÉES
+        // 4. Types d'Événements (Portfolio)
+        $this->command->info('Création des types d\'événements...');
+        $this->call(EventTypeSeeder::class);
+
+        // 5. Parcours de Cynthia
+        $this->command->info('Création du parcours de Cynthia...');
+        $this->call(JourneySeeder::class);
+
+        // 6. Pages Statiques
+        $this->command->info('Création des pages statiques...');
+        $this->call(PageSeeder::class);
+
+        // 7. OPTIONNEL : Générer la masse de données
+        // Décommenter les lignes ci-dessous pour générer des données de test
         //$this->command->info('Génération de 05 Articles (avec images)...');
         //Article::factory(05)->create();
 
@@ -52,17 +57,9 @@ class DatabaseSeeder extends Seeder
         //$this->command->info('Génération de 05 Témoignages...');
         //Testimonial::factory(05)->create();
 
-        // 5. SEEDER LES PARTENAIRES
         //$this->command->info('Création des Partenaires...');
         //$this->call(PartnerSeeder::class);
-        // 6. SEEDER LES JOURNEYS
-        
-        $this->command->info('Création du parcours de Cynthia...');
-        $this->call(JourneySeeder::class);
-        // 7. SEEDER LES PAGES
-        $this->command->info('Création des Pages statiques...');
-        $this->call([
-            PageSeeder::class,
-        ]);
+
+        $this->command->info('✓ Base de données seedée avec succès !');
     }
 }

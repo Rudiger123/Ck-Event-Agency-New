@@ -1,76 +1,149 @@
-# 🌟 CK Event Agency - Premium Communication Platform
+# 🌟 CK Event Agency
 
-[![Laravel 11](https://img.shields.io/badge/Laravel-11.x-FF2D20?style=for-the-badge&logo=laravel)](https://laravel.com)
-[![Livewire 3](https://img.shields.io/badge/Livewire-3.x-FB70A9?style=for-the-badge&logo=livewire)](https://livewire.laravel.com)
-[![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-4.0-38B2AC?style=for-the-badge&logo=tailwind-css)](https://tailwindcss.com)
-[![Filament PHP](https://img.shields.io/badge/Filament_PHP-3.x-EAB308?style=for-the-badge&logo=filament)](https://filamentphp.com)
+> Plateforme web premium pour l'agence de communication et d'événementiel de prestige.
 
-**CK Event Agency** est une plateforme web de prestige développée pour l'agence de communication et de presse incarnée par **Cynthia Kenne**. Ce projet allie une architecture technique moderne (TALL Stack) à un design épuré "Noir & Or", reflétant l'excellence et l'élégance de l'événementiel de luxe.
+[![Laravel 11](https://img.shields.io/badge/Laravel-11.x-FF2D20?style=flat-square&logo=laravel)](https://laravel.com)
+[![Livewire 3](https://img.shields.io/badge/Livewire-3.x-FB70A9?style=flat-square&logo=livewire)](https://livewire.laravel.com)
+[![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-4.0-38B2AC?style=flat-square&logo=tailwind-css)](https://tailwindcss.com)
+[![Filament PHP](https://img.shields.io/badge/Filament_PHP-3.x-EAB308?style=flat-square)](https://filamentphp.com)
+
+![Accueil CK Event Agency](public/images/accueil.png)
 
 ---
 
-## 🚀 Fonctionnalités Clés
+## 🎯 À Propos
 
-### 🌐 Interface Utilisateur (Frontend)
-- **Landing Page Narrative :** Présentation immersive de la vision de l'agence, des expertises et des dernières actualités.
-- **Média Blog Intelligent :** Système de gestion d'articles avec affichage conditionnel hiérarchisé (Vidéo > Audio > Image).
-- **Portfolio Immersif :** Galeries photos haute résolution avec système de Lightbox interactif (Alpine.js).
-- **Parcours Gamifié :** Timeline interactive retraçant le parcours professionnel de la fondatrice.
-- **Système de Témoignages :** Slider dynamique fluide pour la preuve sociale.
-- **Multilingue (V1) :** Architecture prête pour le bilinguisme (Français/Anglais).
+**CK Event Agency** est une plateforme web élégante et performante conçue pour l'agence de communication et de presse de **Cynthia Kenne**. 
 
-### 🛠️ Espace Administration (Back-Office)
-- **Dashboard Customisé :** Widgets de statistiques en temps réel, graphiques d'activité et gestion des priorités.
-- **Gestionnaire de Devis (CRM) :** Réception des demandes complexes et envoi de propositions commerciales (PDF) directement depuis l'admin.
-- **Modération de Contenu :** Gestion complète des commentaires, articles, événements et abonnés newsletter.
-- **Réglages Dynamiques :** Contrôle total sur les coordonnées, liens sociaux et SEO sans toucher au code.
+Elle combine une **architecture technique moderne** (TALL Stack) avec un **design luxe Noir & Or** pour valoriser l'information et l'événementiel de prestige.
+
+---
+
+## ⚡ Démarrage Rapide (5 minutes)
+
+### ✅ Prérequis
+- PHP 8.2+
+- Composer
+- Node.js 18+
+- MySQL ou SQLite
+
+### 🚀 Installation
+
+```bash
+# 1️⃣ Cloner le projet
+git clone https://github.com/Rudiger123/ck-event-agency.git
+cd ck-event-agency
+
+# 2️⃣ Installer les dépendances
+composer install
+npm install
+
+# 3️⃣ Configurer l'environnement
+cp .env.example .env
+php artisan key:generate
+
+# 4️⃣ Initialiser la base de données
+php artisan migrate --seed
+
+# 5️⃣ Lancer les serveurs
+php artisan serve      # Terminal 1 - http://localhost:8000
+npm run dev            # Terminal 2 - Vite dev server
+```
+
+**Connexion Admin :**
+- URL : http://localhost:8000/admin
+- Identifiants définis dans les seeders
+
+---
+
+## 📋 Fonctionnalités
+
+### 🌐 **Frontend Client**
+| Fonctionnalité | Description |
+|---|---|
+| 🏠 **Landing Page** | Présentation immersive de l'agence avec vision et expertise |
+| 📰 **Blog Intelligent** | Média riche avec affichage hiérarchisé (Vidéo → Audio → Image) |
+| 🎨 **Portfolio** | Galeries haute résolution avec Lightbox interactif |
+| ⏳ **Timeline** | Parcours professionnel interactif |
+| 💬 **Témoignages** | Slider dynamique de preuve sociale |
+| 📧 **Newsletter** | Abonnement avec gestion en admin |
+| 📝 **Formulaires** | Demandes de devis et messages de contact |
+
+### 🛠️ **Back-Office Admin**
+| Fonctionnalité | Description |
+|---|---|
+| 📊 **Dashboard** | Stats en temps réel, graphiques d'activité |
+| 💼 **Gestion Devis** | Réception et envoi de propositions (PDF) |
+| ✏️ **Modération** | Gestion de tous les contenus (articles, événements, commentaires) |
+| ⚙️ **Réglages** | Contrôle dynamique : coordonnées, réseaux, SEO |
+| 👥 **Utilisateurs** | Gestion des rôles et permissions |
 
 ---
 
 ## 🛠️ Stack Technique
 
-- **Framework :** [Laravel 11](https://laravel.com)
-- **Frontend :** [Livewire 3](https://livewire.laravel.com) & [Alpine.js](https://alpinejs.dev)
-- **Design :** [Tailwind CSS 4.0](https://tailwindcss.com) (Architecture luxe Noir & Or)
-- **Panneau Admin :** [FilamentPHP v3](https://filamentphp.com)
-- **Base de données :** MySQL (Production) / SQLite (Local)
-- **Gestion Médias :** Spatie MediaLibrary
-- **Internationalisation :** Spatie Laravel Translatable
+| Couche | Technologie |
+|---|---|
+| **Backend** | Laravel 11 (PHP 8.2+) |
+| **Frontend** | Livewire 3 + Alpine.js, Tailwind CSS 4.0 |
+| **Admin** | Filament PHP v3 |
+| **Base de données** | MySQL (production) / SQLite (local) |
+| **Médias** | Spatie MediaLibrary |
+| **Traduction** | Spatie Laravel Translatable |
+| **Build** | Vite + npm |
 
 ---
 
-## 📦 Installation Locale
+## 📁 Structure du Projet
 
-1. **Cloner le projet**
-   ```bash
-   git clone https://github.com/Rudiger123/ck-event-agency.git
-   cd ck-event-agency
-   Installer les dépendances PHP & JS
-```Bash
-    composer install
-        npm install
-    Configuration de l'environnement
+```
+ck-event-agency/
+├── app/
+│   ├── Http/              # Contrôleurs & Middleware
+│   ├── Livewire/          # Composants réactifs (logique frontend)
+│   ├── Filament/          # Ressources admin
+│   ├── Models/            # Modèles de données
+│   ├── Mail/              # Notifications email
+│   ├── Observers/         # Event listeners
+│   └── Services/          # Logique métier
+├── resources/
+│   ├── views/             # Blade templates
+│   └── js/css/            # Assets
+├── public/
+│   ├── images/            # Médias statiques
+│   └── storage/           # Uploads utilisateurs
+├── database/
+│   ├── migrations/        # Schéma base de données
+│   └── seeders/           # Données de test
+├── docs/                  # Documentation
+└── tests/                 # Tests unitaires & fonctionnels
 ```
 
-```Bash
-cp .env.example .env
-php artisan key:generate
-```
-Migration et Seed (Données de test)
-```Bash
-php artisan migrate --seed
-```
-Lancer les serveurs
+---
 
-```Bash
-php artisan serve
-npm run dev
+## 🔧 Commandes Utiles
+
+```bash
+# Développement
+php artisan serve              # Démarrer le serveur Laravel (port 8000)
+npm run dev                    # Démarrer Vite en mode dev
+php artisan migrate            # Exécuter les migrations
+
+# Admin Filament
+php artisan make:filament-resource Post  # Créer une nouvelle ressource
+
+# Testing
+php artisan test               # Lancer tous les tests
+php artisan test tests/Feature # Tester un dossier spécifique
+
+# Production
+npm run build                  # Compiler les assets (minifiés)
+php artisan migrate:fresh --seed  # Reset DB + seeders
+
+# Cache & Optimization
+php artisan cache:clear       # Vider le cache
+php artisan view:cache        # Compiler les vues
 ```
-## 📐 Architecture du Projet
-Le projet suit les principes du Clean Code et du Service Pattern :
-Models : Utilisation intensive de Traits pour le multilingue et les médias.
-Livewire Components : Logique métier isolée pour une réactivité optimale sans rechargement de page.
-Filament Resources : Interfaces d'administration hautement personnalisées pour un workflow client simplifié.
 ## 👤 Crédits & Vision
 Inspiration & Fondatrice : Cynthia Kenne
 Développement : [Ton Nom ou Pseudo GitHub]
