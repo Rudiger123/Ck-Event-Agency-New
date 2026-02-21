@@ -8,10 +8,11 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use Spatie\Translatable\HasTranslations;
 use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
+use App\Traits\Sluggable;
 
 class Article extends Model implements HasMedia
 {
-    use SoftDeletes, HasTranslations, InteractsWithMedia, HasFactory;
+    use SoftDeletes, HasTranslations, InteractsWithMedia, HasFactory, Sluggable;
 
     protected $fillable = [
         'user_id',

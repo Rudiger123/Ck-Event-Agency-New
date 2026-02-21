@@ -29,11 +29,20 @@ class EventResource extends Resource
                     ->schema([
                         Forms\Components\TextInput::make('title')
                             ->label('Nom de l\'événement')
-                            ->required(),
-                        
-                        Forms\Components\TextInput::make('slug')
                             ->required()
-                            ->unique(ignoreRecord: true),
+                            ->live(debounce: 500)
+                            ->afterStateUpdated(function (Forms\Set $set, ?string $state) {
+                                if ($state !== null) {
+                                    $set('slug', \Illuminate\Support\Str::slug($state));
+                                }
+                            }),
+
+                        Forms\Components\TextInput::make('slug')
+                            ->label('Slug (auto-généré)')
+                            ->required()
+                            ->unique(ignoreRecord: true)
+                            ->readOnly()
+                            ->dehydrated(),
 
                         Forms\Components\Select::make('event_type_id')
                             ->relationship('eventType', 'name')
@@ -47,10 +56,10 @@ class EventResource extends Resource
                         Forms\Components\DatePicker::make('event_date')
                             ->label('Date de l\'événement')
                             ->required(),
-                            
+
                         Forms\Components\TextInput::make('location')
                             ->label('Lieu'),
-                            
+
                         Forms\Components\TextInput::make('client_name')
                             ->label('Client (Optionnel)'),
                     ])->columns(2),
@@ -81,14 +90,14 @@ class EventResource extends Resource
                             ->reorderable()
                             ->image(),
                     ]),
-                
+
                 Forms\Components\Section::make('Paramètres')
                     ->schema([
                         Forms\Components\Select::make('user_id')
                             ->relationship('creator', 'name')
                             ->default(auth()->id())
                             ->required(),
-                        
+
                         Forms\Components\Select::make('status')
                             ->options(['draft' => 'Brouillon', 'published' => 'Publié'])
                             ->default('published'),
@@ -103,16 +112,16 @@ class EventResource extends Resource
                 Tables\Columns\SpatieMediaLibraryImageColumn::make('cover_image')
                     ->collection('cover_image')
                     ->label('Image'),
-                
+
                 Tables\Columns\TextColumn::make('title')
                     ->searchable(),
-                
+
                 Tables\Columns\TextColumn::make('eventType.name')
                     ->badge(),
-                
+
                 Tables\Columns\TextColumn::make('event_date')
                     ->date(),
-                
+
                 Tables\Columns\TextColumn::make('status')
                     ->badge(),
             ])

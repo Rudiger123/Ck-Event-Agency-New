@@ -29,11 +29,20 @@ class ArticleResource extends Resource
                         Forms\Components\TextInput::make('title')
                             ->label('Titre')
                             ->required()
-                            ->maxLength(255),
-                        
+                            ->maxLength(255)
+                            ->live(debounce: 500)
+                            ->afterStateUpdated(function (Forms\Set $set, ?string $state) {
+                                if ($state !== null) {
+                                    $set('slug', \Illuminate\Support\Str::slug($state));
+                                }
+                            }),
+
                         Forms\Components\TextInput::make('slug')
+                            ->label('Slug (auto-généré)')
                             ->required()
-                            ->unique(ignoreRecord: true),
+                            ->unique(ignoreRecord: true)
+                            ->readOnly()
+                            ->dehydrated(),
 
                         Forms\Components\Select::make('category_id')
                             ->relationship('category', 'name')
@@ -59,7 +68,7 @@ class ArticleResource extends Resource
                             ->label('Image à la une')
                             ->image()
                             ->imageEditor(),
-                        
+
                         // Upload Vidéo (optionnel)
                         SpatieMediaLibraryFileUpload::make('video')
                             ->collection('video')
@@ -100,10 +109,10 @@ class ArticleResource extends Resource
                 Tables\Columns\TextColumn::make('title')
                     ->searchable()
                     ->limit(50),
-                
+
                 Tables\Columns\TextColumn::make('category.name')
                     ->badge(),
-                
+
                 Tables\Columns\TextColumn::make('status')
                     ->badge()
                     ->color(fn (string $state): string => match ($state) {

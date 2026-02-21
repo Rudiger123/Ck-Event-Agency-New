@@ -9,6 +9,8 @@ use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
+use Filament\Tables\Actions\Action;
+use Illuminate\Database\Eloquent\Collection;
 
 class NewsletterSubscriberResource extends Resource
 {
@@ -33,11 +35,13 @@ class NewsletterSubscriberResource extends Resource
                         Forms\Components\TextInput::make('email')
                             ->label('Adresse Email')
                             ->email()
-                            ->required()
-                            ->unique(ignoreRecord: true),
+                            ->disabled()
+                            ->dehydrated(false),
 
                         Forms\Components\TextInput::make('first_name')
-                            ->label('Prénom'),
+                            ->label('Prénom')
+                            ->disabled()
+                            ->dehydrated(false),
 
                         Forms\Components\Select::make('locale')
                             ->label('Langue')
@@ -45,8 +49,8 @@ class NewsletterSubscriberResource extends Resource
                                 'fr' => 'Français',
                                 'en' => 'English',
                             ])
-                            ->default('fr')
-                            ->required(),
+                            ->disabled()
+                            ->dehydrated(false),
                     ])->columns(2),
 
                 Forms\Components\Section::make('Statut')
@@ -61,11 +65,23 @@ class NewsletterSubscriberResource extends Resource
                             ->required(),
 
                         Forms\Components\DateTimePicker::make('confirmed_at')
-                            ->label('Confirmé le'),
+                            ->label('Confirmé le')
+                            ->disabled()
+                            ->dehydrated(false),
 
                         Forms\Components\DateTimePicker::make('unsubscribed_at')
-                            ->label('Désabonné le'),
+                            ->label('Désabonné le')
+                            ->disabled()
+                            ->dehydrated(false),
                     ])->columns(2),
+
+                Forms\Components\Section::make('Dates')
+                    ->schema([
+                        Forms\Components\TextInput::make('created_at')
+                            ->label('Inscrit le')
+                            ->disabled()
+                            ->dehydrated(false),
+                    ]),
             ]);
     }
 
@@ -90,6 +106,20 @@ class NewsletterSubscriberResource extends Resource
                         'en' => 'primary',
                     }),
 
+                Tables\Columns\ToggleColumn::make('is_active')
+                    ->label('Actif')
+                    ->getStateUsing(fn (NewsletterSubscriber $record): bool => $record->status === 'confirmed')
+                    ->updateStateUsing(function (NewsletterSubscriber $record, bool $state): void {
+                        $record->update([
+                            'status' => $state ? 'confirmed' : 'unsubscribed',
+                            'confirmed_at' => $state ? now() : null,
+                            'unsubscribed_at' => !$state ? now() : null,
+                        ]);
+                    })
+                    ->action(function () {
+                        return;
+                    }),
+
                 Tables\Columns\TextColumn::make('status')
                     ->label('Statut')
                     ->badge()
@@ -98,12 +128,6 @@ class NewsletterSubscriberResource extends Resource
                         'confirmed' => 'success',
                         'unsubscribed' => 'danger',
                     }),
-
-                Tables\Columns\TextColumn::make('confirmed_at')
-                    ->label('Confirmé le')
-                    ->dateTime()
-                    ->sortable()
-                    ->toggleable(isToggledHiddenByDefault: true),
 
                 Tables\Columns\TextColumn::make('created_at')
                     ->label('Inscrit le')
@@ -126,12 +150,61 @@ class NewsletterSubscriberResource extends Resource
                     ]),
             ])
             ->actions([
-                Tables\Actions\EditAction::make(),
-                Tables\Actions\DeleteAction::make(),
+                Tables\Actions\ViewAction::make(),
+                Tables\Actions\EditAction::make()
+                    ->form([
+                        Forms\Components\Section::make('Modifier le statut')
+                            ->schema([
+                                Forms\Components\Select::make('status')
+                                    ->label('Statut')
+                                    ->options([
+                                        'pending' => 'En attente de confirmation',
+                                        'confirmed' => 'Confirmé',
+                                        'unsubscribed' => 'Désabonné',
+                                    ])
+                                    ->required()
+                                    ->live()
+                                    ->afterStateUpdated(function (Forms\Set $set, string $state) {
+                                        if ($state === 'confirmed') {
+                                            $set('confirmed_at', now());
+                                            $set('unsubscribed_at', null);
+                                        } elseif ($state === 'unsubscribed') {
+                                            $set('unsubscribed_at', now());
+                                            $set('confirmed_at', null);
+                                        }
+                                    }),
+
+                                Forms\Components\DateTimePicker::make('confirmed_at')
+                                    ->label('Confirmé le')
+                                    ->disabled(),
+
+                                Forms\Components\DateTimePicker::make('unsubscribed_at')
+                                    ->label('Désabonné le')
+                                    ->disabled(),
+                            ]),
+                    ]),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
-                    Tables\Actions\DeleteBulkAction::make(),
+                    Tables\Actions\BulkAction::make('confirm')
+                        ->label('Confirmer')
+                        ->icon('heroicon-m-check')
+                        ->action(fn (Collection $records) => $records->each(fn (NewsletterSubscriber $record) => $record->update([
+                            'status' => 'confirmed',
+                            'confirmed_at' => now(),
+                            'unsubscribed_at' => null,
+                        ])))
+                        ->requiresConfirmation(),
+
+                    Tables\Actions\BulkAction::make('unsubscribe')
+                        ->label('Désabonner')
+                        ->icon('heroicon-m-x-mark')
+                        ->action(fn (Collection $records) => $records->each(fn (NewsletterSubscriber $record) => $record->update([
+                            'status' => 'unsubscribed',
+                            'unsubscribed_at' => now(),
+                            'confirmed_at' => null,
+                        ])))
+                        ->requiresConfirmation(),
                 ]),
             ]);
     }
@@ -141,6 +214,23 @@ class NewsletterSubscriberResource extends Resource
         return [
             'index' => Pages\ListNewsletterSubscribers::route('/'),
             'edit' => Pages\EditNewsletterSubscriber::route('/{record}/edit'),
+            'view' => Pages\ViewNewsletterSubscriber::route('/{record}'),
         ];
+    }
+
+    /**
+     * Retirer les actions de création
+     */
+    public static function canCreate(): bool
+    {
+        return false;
+    }
+
+    /**
+     * Retirer les actions de suppression
+     */
+    public static function canDelete(\Illuminate\Database\Eloquent\Model $record): bool
+    {
+        return false;
     }
 }

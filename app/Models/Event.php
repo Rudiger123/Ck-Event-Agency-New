@@ -8,10 +8,11 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use Spatie\Translatable\HasTranslations;
 use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
+use App\Traits\Sluggable;
 
 class Event extends Model implements HasMedia
 {
-    use SoftDeletes, HasTranslations, InteractsWithMedia, HasFactory;
+    use SoftDeletes, HasTranslations, InteractsWithMedia, HasFactory, Sluggable;
 
     protected $fillable = [
         'user_id',
@@ -31,10 +32,10 @@ class Event extends Model implements HasMedia
     ];
 
     public $translatable = [
-        'title', 
-        'description', 
-        'testimonial', 
-        'meta_title', 
+        'title',
+        'description',
+        'testimonial',
+        'meta_title',
         'meta_description'
     ];
 

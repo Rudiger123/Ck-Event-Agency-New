@@ -7,9 +7,13 @@ use Illuminate\Support\Facades\View;
 use App\Models\Message;
 use App\Models\QuoteRequest;
 use App\Models\Comment;
+use App\Models\Article;
+use App\Models\Event;
 use App\Observers\MessageObserver;
 use App\Observers\QuoteRequestObserver;
 use App\Observers\CommentObserver;
+use App\Observers\ArticleObserver;
+use App\Observers\EventObserver;
 use App\Services\SeoService;
 
 class AppServiceProvider extends ServiceProvider
@@ -35,5 +39,7 @@ class AppServiceProvider extends ServiceProvider
         Message::observe(MessageObserver::class);
         QuoteRequest::observe(QuoteRequestObserver::class);
         Comment::observe(CommentObserver::class);
+        Article::observe(ArticleObserver::class);
+        Event::observe(EventObserver::class);
     }
 }
